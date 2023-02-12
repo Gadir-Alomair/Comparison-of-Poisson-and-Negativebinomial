@@ -1,0 +1,27 @@
+mydata<-read.delim(file.choose(), header=T)
+y<- mydata$y
+x3<- mydata$x3
+x10<- mydata$x10
+x11<- mydata$x11
+x12<- mydata$x12
+x16<- mydata$x16
+install.packages('pscl') 
+library(pscl)
+install.packages('MASS') 
+library('MASS')
+
+Claim=data.frame(y=y,x3=x3,x10=x10,x11=x11,x12=x12, x16=x16)
+
+## Poisson ##
+poi= glm(y~x3+x10+x11+x12+x16, family = "poisson", data = Claim)
+
+summary(poi)
+AIC(poi)
+BIC(poi)
+
+## negative binomial ##
+negabin= glm.nb(y~x3+x10+x11+x12+x16, data = Claim)
+
+summary(negabin)
+AIC(negabin)
+BIC(negabin)
